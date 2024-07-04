@@ -42,8 +42,11 @@ loss_fn = nn.BCELoss()
 # ============================ step 4/5 选择优化器   ============================
 lr = 0.01  # 学习率
 optimizer = torch.optim.SGD(lr_net.parameters(), lr=lr, momentum=0.9)
+# optimizer = torch.optim.Adam(lr_net.parameters(), lr=lr)
 
 # ============================ step 5/5 模型训练 ============================
+plt.figure()
+
 for iteration in range(1000):
 
     # 前向传播
@@ -75,11 +78,11 @@ for iteration in range(1000):
         plt.ylim(-10, 10)
         plt.plot(plot_x, plot_y)
 
-        plt.text(-5, 5, 'Loss=%.4f' % loss.data.numpy(), fontdict={'size': 20, 'color': 'red'})
+        # plt.text(-5, 5, 'Loss=%.4f' % loss.data.numpy(), fontdict={'size': 20, 'color': 'red'})
         plt.title("Iteration: {}\nw0:{:.2f} w1:{:.2f} b: {:.2f} accuracy:{:.2%}".format(iteration, w0, w1, plot_b, acc))
-        plt.legend()
-        plt.savefig(str(iteration / 20)+".png")
-        plt.show()
+        # plt.legend()
+        # plt.savefig(str(iteration / 20)+".png")
+        # plt.show()
         plt.pause(0.5)
         # 如果准确率大于 99%，则停止训练
         if acc > 0.99:
