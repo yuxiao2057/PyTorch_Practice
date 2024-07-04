@@ -115,15 +115,17 @@ if flag:
 # ======================================= example 8 =======================================
 # torch.transpose
 
-# flag = True
-flag = False
+flag = True
+# flag = False
 
 if flag:
     # torch.transpose
     #把 c * h * w 变换为 h * w * c
     t = torch.rand((2, 3, 4))
-    t_transpose = torch.transpose(t, dim0=1, dim1=2)    # c*h*w     h*w*c
-    print("t shape:{}\nt_transpose shape: {}".format(t.shape, t_transpose.shape))
+    t_transpose = torch.transpose(t, 0, 1)    # c*h*w     h*c*w
+    t_transpose = torch.transpose(t_transpose, 1, 2)    # h*c*w     h*w*c
+    t_permute = torch.permute(t, (1, 2, 0))
+    print("t shape:{}\nt_transpose shape: {}\nt_permute shape: {}".format(t.shape, t_transpose.shape, t_permute.shape))
 
 
 # ======================================= example 9 =======================================
@@ -150,8 +152,8 @@ if flag:
 # ======================================= example 8 =======================================
 # torch.add
 
-flag = True
-# flag = False
+# flag = True
+flag = False
 
 if flag:
     t_0 = torch.randn((3, 3))
