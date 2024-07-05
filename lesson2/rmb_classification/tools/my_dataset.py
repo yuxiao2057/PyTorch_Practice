@@ -3,6 +3,7 @@
 import os
 import random
 from PIL import Image
+import cv2
 from torch.utils.data import Dataset
 
 random.seed(1)
@@ -43,12 +44,11 @@ class RMBDataset(Dataset):
             # dirs ['1', '100']
             for sub_dir in dirs:
                 # 文件列表
-                img_names = os.listdir(os.path.join(root, sub_dir))
+                img_list = os.listdir(os.path.join(root, sub_dir))
                 # 取出 jpg 结尾的文件
-                img_names = list(filter(lambda x: x.endswith('.jpg'), img_names))
+                img_names = list(filter(lambda x: x.endswith('.jpg'), img_list))
                 # 遍历图片
-                for i in range(len(img_names)):
-                    img_name = img_names[i]
+                for img_name in img_names:
                     # 图片的绝对路径
                     path_img = os.path.join(root, sub_dir, img_name)
                     # 标签，这里需要映射为 0、1 两个类别
@@ -90,15 +90,3 @@ class AntsDataset(Dataset):
 
     def __len__(self):
         return len(self.data_info)
-
-
-
-
-
-
-
-
-
-
-
-

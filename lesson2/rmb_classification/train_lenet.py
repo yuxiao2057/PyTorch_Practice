@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import random
 import numpy as np
 import torch
@@ -9,8 +10,10 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import torch.optim as optim
 from matplotlib import pyplot as plt
-from model.lenet import LeNet, LeNetSequetial
+from model.lenet import LeNet, LeNetSequential
 from tools.my_dataset import RMBDataset
+if "/home/yuxiao/workspace/PyTorch_Practice" not in sys.path:
+    sys.path.append("/home/yuxiao/workspace/PyTorch_Practice")
 from enviroments import rmb_split_dir
 from tensorboardX import  SummaryWriter
 
@@ -65,7 +68,7 @@ valid_loader = DataLoader(dataset=valid_data, batch_size=BATCH_SIZE)
 
 # ============================ step 2/5 模型 ============================
 
-net = LeNetSequetial(classes=2)
+net = LeNetSequential(classes=2)
 net.initialize_weights()
 
 # ============================ step 3/5 损失函数 ============================
@@ -108,9 +111,10 @@ for epoch in range(MAX_EPOCH):
         optimizer.step()
 
         # 统计分类情况
-        _, predicted = torch.max(outputs.data, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).squeeze().sum().numpy()
+        with torch.no_grad():
+            _, predicted = torch.max(outputs, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).squeeze().sum()
 
         # 打印训练信息
         loss_mean += loss.item()

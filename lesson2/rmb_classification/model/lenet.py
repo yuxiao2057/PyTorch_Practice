@@ -40,9 +40,9 @@ class LeNet(nn.Module):
                 m.bias.data.zero_()
 
 
-class LeNetSequetial(nn.Module):
+class LeNetSequential(nn.Module):
     def __init__(self, classes):
-        super(LeNetSequetial, self).__init__()
+        super(LeNetSequential, self).__init__()
         self.features = nn.Sequential(
             nn.Conv2d(3, 6, 5),
             nn.ReLU(),
